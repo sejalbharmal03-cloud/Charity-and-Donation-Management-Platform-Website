@@ -1,0 +1,1 @@
+import {Outlet} from 'react-router-dom';import Navbar from '../components/Navbar';export default function PublicLayout(){return <><Navbar/><main><Outlet/></main><footer>© {new Date().getFullYear()} CareConnect. Together we can make a difference.</footer></>}

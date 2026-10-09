@@ -1,0 +1,3 @@
+const router=require("express").Router(),db=require("../config/db"),{auth,adminOnly}=require("../middleware/auth");
+router.get("/:campaignId",async(q,s)=>{let[r]=await db.query("SELECT * FROM impact_updates WHERE campaign_id=? ORDER BY created_at DESC",[q.params.campaignId]);s.json({success:true,updates:r})});
+router.post("/",auth,adminOnly,async(q,s)=>{let{campaign_id,title,body,image_url,video_url}=q.body;await db.query("INSERT INTO impact_updates(campaign_id,title,body,image_url,video_url) VALUES(?,?,?,?,?)",[campaign_id,title,body,image_url||null,video_url||null]);s.json({success:true})});module.exports=router;
