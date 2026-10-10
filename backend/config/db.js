@@ -24,9 +24,8 @@ pool.getConnection()
         console.log("✅ MySQL Cloud Database Connected");
         connection.release();
     })
-    .catch(error => {
-        console.error("❌ Database Connection Failed:");
-        console.error(error.message);
-    });
+   .catch(error => {
+    console.error("❌ Database Connection Failed:", error);
+});
 
 module.exports = pool;
