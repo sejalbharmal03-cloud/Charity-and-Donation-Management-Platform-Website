@@ -9,7 +9,7 @@ const router = express.Router();
 // =====================================================
 // CREATE JWT TOKEN
 // =====================================================
-
+console.log("JWT_SECRET loaded:", Boolean(process.env.JWT_SECRET));
 function createToken(user) {
     return jwt.sign(
         {
@@ -20,7 +20,7 @@ function createToken(user) {
         },
         process.env.JWT_SECRET,
         {
-            expiresIn: "2d"
+            expiresIn: "7d"
         }
     );
 }
