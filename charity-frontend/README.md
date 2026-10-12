@@ -6,7 +6,7 @@ React + Vite frontend for the supplied CareConnect charity/donation backend.
 1. Extract this ZIP.
 2. Open terminal in the frontend folder.
 3. Run `npm install`.
-4. Start the backend on `http://localhost:5000`.
+4. Start the backend on `https://charity-and-donation-management-platform.onrender.com`.
 5. Run `npm run dev`.
 6. Open `http://localhost:5173`.
 

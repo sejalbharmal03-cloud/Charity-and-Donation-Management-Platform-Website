@@ -37,7 +37,7 @@ export default function ResourcesPage() {
   const fileLink = (url) =>
     url?.startsWith("http://") || url?.startsWith("https://")
       ? url
-      : `http://localhost:5000${url}`;
+      : `https://charity-and-donation-management-platform.onrender.com${url}`;
 
   if (loading) return <main className="resources-public"><p>Loading resources...</p></main>;
 
