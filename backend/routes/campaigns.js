@@ -54,7 +54,6 @@ router.get("/", async (req, res) => {
                 c.description,
                 c.goal,
                 c.image_url,
-                c.start_date,
                 c.deadline,
                 c.status,
                 c.created_at,
