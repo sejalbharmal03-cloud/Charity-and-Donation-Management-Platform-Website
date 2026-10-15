@@ -1,4 +1,3 @@
-
 require("dotenv").config();
 
 const express = require("express");
@@ -8,19 +7,17 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// -----------------------------
-// MIDDLEWARE
-// -----------------------------
-
+// CORS - Allow Render frontend and local development
 app.use(
   cors({
     origin: [
-  "https://charity-and-donation-management-pla.vercel.app",
-  "http://localhost:5173",
-  "http://127.0.0.1:5173",
-  "http://localhost:5500",
-  "http://127.0.0.1:5500",
-],
+      "https://charity-and-donation-management-platform-99qq.onrender.com",
+      "https://charity-and-donation-management-pla.vercel.app",
+      "http://localhost:5173",
+      "http://127.0.0.1:5173",
+      "http://localhost:5500",
+      "http://127.0.0.1:5500",
+    ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
@@ -28,27 +25,15 @@ app.use(
 );
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.use(
-  express.urlencoded({
-    extended: true,
-  })
-);
-
-// -----------------------------
-// STATIC UPLOADS
-// -----------------------------
-
-// Files are served from backend/uploads/
+// Static uploads
 app.use(
   "/uploads",
   express.static(path.join(__dirname, "uploads"))
 );
 
-// -----------------------------
-// TEST ROUTE
-// -----------------------------
-
+// API health check
 app.get("/", (req, res) => {
   res.json({
     success: true,
@@ -58,34 +43,18 @@ app.get("/", (req, res) => {
   });
 });
 
-// -----------------------------
-// API ROUTES
-// -----------------------------
+// API routes
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/campaigns", require("./routes/campaigns"));
+app.use("/api/donations", require("./routes/donations"));
+app.use("/api/volunteers", require("./routes/volunteers"));
+app.use("/api/sponsors", require("./routes/sponsors"));
+app.use("/api/users", require("./routes/users"));
+app.use("/api/reports", require("./routes/reports"));
+app.use("/api/messages", require("./routes/messages"));
+app.use("/api/resources", require("./routes/resources"));
 
-const authRoutes = require("./routes/auth");
-const campaignRoutes = require("./routes/campaigns");
-const donationRoutes = require("./routes/donations");
-const volunteerRoutes = require("./routes/volunteers");
-const sponsorRoutes = require("./routes/sponsors");
-const userRoutes = require("./routes/users");
-const reportRoutes = require("./routes/reports");
-const messageRoutes = require("./routes/messages");
-const resourceRoutes = require("./routes/resources");
-
-app.use("/api/auth", authRoutes);
-app.use("/api/campaigns", campaignRoutes);
-app.use("/api/donations", donationRoutes);
-app.use("/api/volunteers", volunteerRoutes);
-app.use("/api/sponsors", sponsorRoutes);
-app.use("/api/users", userRoutes);
-app.use("/api/reports", reportRoutes);
-app.use("/api/messages", messageRoutes);
-app.use("/api/resources", resourceRoutes);
-
-// -----------------------------
-// 404 HANDLER
-// -----------------------------
-
+// 404 handler
 app.use((req, res) => {
   res.status(404).json({
     success: false,
@@ -94,10 +63,7 @@ app.use((req, res) => {
   });
 });
 
-// -----------------------------
-// ERROR HANDLER
-// -----------------------------
-
+// Error handler
 app.use((error, req, res, next) => {
   console.error("Server error:", error);
 
@@ -107,16 +73,7 @@ app.use((error, req, res, next) => {
   });
 });
 
-// -----------------------------
-// START SERVER
-// -----------------------------
-
+// Start server
 app.listen(PORT, () => {
-  console.log("==========================================");
-  console.log("   CARECONNECT CHARITY PLATFORM");
-  console.log("==========================================");
-  console.log(`Server: http://localhost:${PORT}`);
-  console.log("API routes ready");
-  console.log("Uploads directory ready");
-  console.log("==========================================");
+  console.log(`CareConnect API running on port ${PORT}`);
 });
