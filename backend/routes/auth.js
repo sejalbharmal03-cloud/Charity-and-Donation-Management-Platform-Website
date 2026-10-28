@@ -11,6 +11,14 @@ const router = express.Router();
 // =====================================================
 console.log("JWT_SECRET loaded:", Boolean(process.env.JWT_SECRET));
 function createToken(user) {
+    const secret = process.env.JWT_SECRET;
+
+    console.log("JWT secret available during token creation:", Boolean(secret));
+
+    if (!secret) {
+        throw new Error("JWT_SECRET is missing during token creation");
+    }
+
     return jwt.sign(
         {
             id: user.id,
@@ -18,10 +26,8 @@ function createToken(user) {
             email: user.email,
             role: user.role
         },
-        process.env.JWT_SECRET,
-        {
-            expiresIn: "7d"
-        }
+        secret,
+        { expiresIn: "7d" }
     );
 }
 
